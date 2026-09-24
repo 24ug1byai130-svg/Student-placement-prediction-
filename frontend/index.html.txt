@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Placement Prediction</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎓 Student Placement Prediction</h1>
+
+    <p>Enter your details to predict placement</p>
+
+    <form id="predictionForm">
+
+        <label>CGPA</label>
+        <input type="number" id="cgpa" step="0.1" placeholder="Example: 8.2" required>
+
+        <label>Projects</label>
+        <input type="number" id="projects" placeholder="Example: 2" required>
+
+        <label>Internships</label>
+        <input type="number" id="internships" placeholder="Example: 1" required>
+
+        <label>Coding Score</label>
+        <input type="number" id="coding_score" placeholder="Example: 75" required>
+
+        <button type="submit">Predict Placement</button>
+
+    </form>
+
+    <div class="result" id="result">
+        Prediction will appear here
+    </div>
+
+</div>
+
+<script>
+document.getElementById("predictionForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const cgpa = document.getElementById("cgpa").value;
+    const projects = document.getElementById("projects").value;
+    const internships = document.getElementById("internships").value;
+    const coding_score = document.getElementById("coding_score").value;
+
+    const url = `http://127.0.0.1:8000/predict?cgpa=${cgpa}&projects=${projects}&internships=${internships}&coding_score=${coding_score}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    document.getElementById("result").innerText =
+        "Prediction: " + data.prediction;
+});
+</script>
+
+</body>
+</html>
